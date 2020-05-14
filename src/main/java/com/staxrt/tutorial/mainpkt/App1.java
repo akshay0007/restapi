@@ -19,8 +19,6 @@ public class App1 {
         } catch (IOException e) {
             System.err.println("Unable to load properties file : " + filePath);
         }
-
         return prop;
-
     }
 }
