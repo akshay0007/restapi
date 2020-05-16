@@ -1,7 +1,7 @@
 package com.staxrt.tutorial.securities;
 
-import org.jasypt.util.password.StrongPasswordEncryptor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
@@ -10,20 +10,20 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class EncryptionServiceImpl implements EncryptionService {
-    StrongPasswordEncryptor strongPasswordEncryptor;
+    PasswordEncoder passwordEncoder;
 
     @Autowired
-    public EncryptionServiceImpl(StrongPasswordEncryptor strongPasswordEncryptor) {
-        this.strongPasswordEncryptor = strongPasswordEncryptor;
+    public EncryptionServiceImpl(PasswordEncoder passwordEncoder) {
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Override
     public String encryptPassword(String password) {
-       return strongPasswordEncryptor.encryptPassword(password);
+       return passwordEncoder.encode(password);
     }
 
     @Override
     public boolean checkEncyptPassword(String plainText, String encryptedText) {
-        return strongPasswordEncryptor.checkPassword(plainText, encryptedText);
+        return passwordEncoder.matches(plainText, encryptedText);
     }
 }

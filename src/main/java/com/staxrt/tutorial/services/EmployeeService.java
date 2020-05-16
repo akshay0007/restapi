@@ -11,13 +11,15 @@ import java.util.Optional;
 
 @Service
 public class EmployeeService {
-    @Autowired
+
     EmployeeCrudDao employeeCrudDao;
 
-    @Autowired
-    @Qualifier("employeeDao")
     CustomDao customDao;
 
+    public EmployeeService(EmployeeCrudDao employeeCrudDao, @Qualifier("employeeCrudDaoImpl") CustomDao customDao) {
+        this.employeeCrudDao = employeeCrudDao;
+        this.customDao = customDao;
+    }
 
     public Optional<Employee> findById(String userId) {
         return employeeCrudDao.findById(userId);
@@ -31,8 +33,8 @@ public class EmployeeService {
         employeeCrudDao.delete(employee);
     }
 
-    public Optional<Employee> update(Employee employee,String id) {
-       return customDao.update(employee,id);
+    public Optional<Employee> update(Employee employee, String id) {
+        return customDao.update(employee, id);
     }
 
 }

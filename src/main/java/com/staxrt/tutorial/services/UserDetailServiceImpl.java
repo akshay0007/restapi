@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service;
  * Created by ubuntu on 15/05/20.
  */
 
-@Service("userDetailsService")
+@Service
 public class UserDetailServiceImpl implements UserDetailsService {
     private EncryptUserService userService;
     private Converter<SecureUser, UserDetails> userUserDetailsConverter;
@@ -24,7 +24,7 @@ public class UserDetailServiceImpl implements UserDetailsService {
     }
 
     @Autowired
-    @Qualifier(value = "userToUserDetails")
+    @Qualifier(value = "userConverter")
     public void setUserUserDetailsConverter(Converter<SecureUser, UserDetails> userUserDetailsConverter) {
         this.userUserDetailsConverter = userUserDetailsConverter;
     }

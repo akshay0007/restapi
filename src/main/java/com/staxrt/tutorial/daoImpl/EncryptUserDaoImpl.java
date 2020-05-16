@@ -48,12 +48,13 @@ public class EncryptUserDaoImpl extends AbstractEntityManager implements Encrypt
     }
 
     @Override
-    public void create(SecureUser secureUser) {
+    public SecureUser create(SecureUser secureUser) {
         EntityManager em = emf.createEntityManager();
         em.getTransaction().begin();
         em.persist(secureUser);
         em.getTransaction().commit();
         em.close();
+        return secureUser;
     }
 
     @Override

@@ -1,17 +1,21 @@
 package com.staxrt.tutorial.config;
 
+import com.staxrt.tutorial.model.SecureUser;
 import org.jasypt.util.password.StrongPasswordEncryptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.convert.converter.Converter;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.jasypt.springsecurity3.authentication.encoding.PasswordEncoder;
+import org.springframework.security.crypto.factory.PasswordEncoderFactories;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 /**
  * Created by ubuntu on 14/05/20.
@@ -23,21 +27,28 @@ public class SecurityConfigure extends WebSecurityConfigurerAdapter {
     private AuthenticationProvider authenticationProvider;
 
     @Autowired
-    @Qualifier("getdaoAuthenticationProvider")
+    @Qualifier("daoAuthenticationProvider")
     public void setAuthenticationProvider(AuthenticationProvider authenticationProvider) {
         this.authenticationProvider = authenticationProvider;
     }
 
+
     @Bean
-    PasswordEncoder getPasswordEncoder(StrongPasswordEncryptor strongPasswordEncryptor) {
-        PasswordEncoder passwordEncoder = new PasswordEncoder();
-        passwordEncoder.setPasswordEncryptor(strongPasswordEncryptor);
-        return passwordEncoder;
+    StrongPasswordEncryptor getEncryptPassword() {
+        return new StrongPasswordEncryptor();
     }
 
     @Bean
-    DaoAuthenticationProvider getdaoAuthenticationProvider(UserDetailsService userDetailsService,
-                                                           PasswordEncoder passwordEncoder) {
+    public PasswordEncoder passwordEncoder() {
+        PasswordEncoder encoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
+        return encoder;
+    }
+
+
+    @Bean
+    public DaoAuthenticationProvider daoAuthenticationProvider(PasswordEncoder passwordEncoder,
+                                                               UserDetailsService userDetailsService) {
+
         DaoAuthenticationProvider daoAuthenticationProvider = new DaoAuthenticationProvider();
         daoAuthenticationProvider.setPasswordEncoder(passwordEncoder);
         daoAuthenticationProvider.setUserDetailsService(userDetailsService);

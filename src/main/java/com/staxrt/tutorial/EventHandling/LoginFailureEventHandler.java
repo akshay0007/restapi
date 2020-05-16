@@ -14,7 +14,6 @@ public class LoginFailureEventHandler implements ApplicationListener<LoginFailur
 
     @Override
     public void onApplicationEvent(LoginFailureEvent loginFailureEvent) {
-        LOG.info("listenres");
-        loginFailureEvent.getSource();
+        LOG.info("user name {0}", loginFailureEvent.getSource());
     }
 }

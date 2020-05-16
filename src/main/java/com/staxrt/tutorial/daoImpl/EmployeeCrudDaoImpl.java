@@ -14,12 +14,10 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-@Qualifier("employeeDao")
 public class EmployeeCrudDaoImpl implements CustomDao<Employee, String> {
     private static final Logger LOG = LoggerFactory.getLogger(EmployeeCrudDaoImpl.class);
 
 
-    @Autowired
     EntityManager entityManager;
 
     @Autowired

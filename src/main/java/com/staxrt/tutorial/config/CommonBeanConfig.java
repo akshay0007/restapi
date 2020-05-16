@@ -1,9 +1,10 @@
 package com.staxrt.tutorial.config;
 
+
 import org.jasypt.util.password.StrongPasswordEncryptor;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 /**
  * Created by ubuntu on 15/05/20.
@@ -12,7 +13,7 @@ import org.springframework.context.annotation.Configuration;
 public class CommonBeanConfig {
 
     @Bean
-    StrongPasswordEncryptor getEncryptPassword() {
+    StrongPasswordEncryptor getEncryptPasswordData() {
         return new StrongPasswordEncryptor();
     }
 

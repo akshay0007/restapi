@@ -12,7 +12,7 @@ public interface EncryptUserDao<E, I> {
 
     void delete(I i);
 
-    void create(E e);
+    E create(E e);
 
     void put(E e);
 

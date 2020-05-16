@@ -20,11 +20,13 @@ public class EncryptUserService {
     EncryptUserDao encryptUserDao;
 
     @Autowired
+    @Qualifier("encryptionServiceImpl")
     public void setEncryptionService(EncryptionService encryptionService) {
         this.encryptionService = encryptionService;
     }
 
     @Autowired
+    @Qualifier("encryptUserDaoImpl")
     public void setEncryptUserDao(EncryptUserDao encryptUserDao) {
         this.encryptUserDao = encryptUserDao;
     }
@@ -42,9 +44,9 @@ public class EncryptUserService {
         encryptUserDao.delete(id);
     }
 
-    public void create(SecureUser secureUser) {
+    public SecureUser create(SecureUser secureUser) {
         secureUser.setEncryptedPass(encryptionService.encryptPassword(secureUser.getPassword()));
-        encryptUserDao.create(secureUser);
+        return (SecureUser) encryptUserDao.create(secureUser);
     }
 
     public void put(SecureUser secureUser) {
