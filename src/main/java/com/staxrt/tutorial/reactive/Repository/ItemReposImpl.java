@@ -1,6 +1,7 @@
 package com.staxrt.tutorial.reactive.Repository;
 
 import com.staxrt.tutorial.reactive.entities.Items;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
@@ -9,7 +10,7 @@ import java.util.List;
 /**
  * Created by ubuntu on 18/05/20.
  */
-@Repository
+@Component
 public class ItemReposImpl extends AbastractRepos implements ItemRepos<Integer, Items> {
 
 
