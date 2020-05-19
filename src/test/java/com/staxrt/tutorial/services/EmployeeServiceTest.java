@@ -7,8 +7,11 @@ import com.staxrt.tutorial.model.Employee;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import java.util.Optional;
 
@@ -26,10 +29,16 @@ public class EmployeeServiceTest {
 
     @Mock
     CustomDao customDao;
+
+    @InjectMocks
+    EmployeeService employeeService;
     private Employee emp;
+    private MockMvc mockMvc;
 
     @BeforeEach
     public void init() {
+        mockMvc = MockMvcBuilders.standaloneSetup(employeeService)
+                .build();
         emp = new Employee();
         emp.setName("abc");
         emp.setTitle("title");
