@@ -1,0 +1,47 @@
+kubernates:
+There are three independent applications (employee-service, department-service, organization-service),
+which communicate between each other through REST API. These Spring Boot microservices use some build-in mechanisms
+provided by Kubernetes: config maps and secrets for distributed configuration,
+etcd for service discovery, and ingresses for API gateway
+
+
+
+kubectl create clusterrolebinding admin --clusterrole=cluster-admin --serviceaccount=default:default
+
+$ kubectl apply -f kubernetes/mongodb-configmap.yaml
+$ kubectl apply -f kubernetes/mongodb-secret.yaml
+
+
+
+$ cd employee-service
+$ docker build -t piomin/employee:1.0 .
+$ cd department-service
+$ docker build -t piomin/department:1.0 .
+$ cd organization-service
+$ docker build -t piomin/organization:1.0 .
+
+
+
+$ kubectl apply -f kubernetes\employee-deployment.yaml
+$ kubectl apply -f kubernetes\department-deployment.yaml
+$ kubectl apply -f kubernetes\organization-deployment.yaml
+
+
+$ kubectl apply -f kubernetes\ingress.yaml
+
+hosts :
+192.168.99.100 microservices.info
+
+
+kubectl describe ing gateway-ingress.
+
+kubectl get svc
+
+kubectl delete -f employee-service.yml
+kubectl delete -f employee-deployment.yml
+
+kubectl get svc
+kubectl get deployment
+kubectl get pods
+
+
